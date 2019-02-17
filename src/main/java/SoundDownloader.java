@@ -20,7 +20,7 @@ public class SoundDownloader {
     public static final int READ_TIMEOUT = 10000;
 
     public static void main(String[] args) {
-        WebDriver webDriver = new ChromeDriver();
+
         try {
 
             int currentPage = 1;
@@ -30,17 +30,18 @@ public class SoundDownloader {
             }
 
             if(currentPage <= 0 || currentPage > TOTAL_PAGES){
-                throw new Exception("Start page must be above zero and below " + (TOTAL_PAGES + 1));
+                throw new Exception("Start page must be greater than 0 and less than " + (TOTAL_PAGES + 1));
             }
 
             int endPage = (args.length > 1) ? Integer.parseInt(args[1]) : TOTAL_PAGES;
 
             if(endPage <= 0 || endPage > TOTAL_PAGES){
-                throw new Exception("End page must be above zero and below " + (TOTAL_PAGES + 1));
+                throw new Exception("End page number must be greater than 0 and less than " + (TOTAL_PAGES + 1));
             } else if (endPage < currentPage){
-                throw new Exception("End page must be less than start page");
+                throw new Exception("End page number must be greater than start page");
             }
 
+            WebDriver webDriver = new ChromeDriver();
             String pageUrl = String.format(BASE_URL, new String[]{Integer.toString(currentPage)});
             webDriver.get(pageUrl);
 
